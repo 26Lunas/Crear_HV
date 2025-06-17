@@ -1,18 +1,20 @@
 // firebase-config.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// 👉 Reemplaza esto con tu configuración de Firebase
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_BUCKET",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyDdbqDRbflmueQVdbhS0uX2_0TWwJdIKXM",
+  authDomain: "cv-web-b0445.firebaseapp.com",
+  projectId: "cv-web-b0445",
+  storageBucket: "cv-web-b0445.appspot.com", // ✅ corregido
+  messagingSenderId: "43928600371",
+  appId: "1:43928600371:web:e8e5726a8f88e69c9b4846"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-window.db = db; // Lo hacemos global para acceder desde script.js
+window.db = db;
+window.auth = auth;

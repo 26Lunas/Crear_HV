@@ -97,6 +97,7 @@ document.getElementById("cvForm").addEventListener("submit", async (e) => {
     await addDoc(collection(window.db, "hojas_de_vida"), {
       nombre,
       correo,
+      cargo_A,
       telefono,
       perfil,
       experiencias,

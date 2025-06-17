@@ -67,37 +67,81 @@ window.verHV = function (id) {
   const closeBtn = document.querySelector('.close');
   const descargarBtn = document.getElementById('descargarPDF');
 
-  // Helper para mostrar objetos/arrays de forma estructurada
-  function renderField(key, value) {
-    if (typeof value === 'object' && value !== null) {
-      let html = `<div style="margin-bottom:10px;"><strong>${key}:</strong><div style="margin-left:15px;">`;
-      if (Array.isArray(value)) {
-        value.forEach((item, idx) => {
-          html += `<div><strong>Item ${idx + 1}:</strong>${typeof item === 'object' ? renderField('', item) : ' ' + item}</div>`;
-        });
-      } else {
-        for (const [subKey, subValue] of Object.entries(value)) {
-          html += renderField(subKey, subValue);
-        }
-      }
-      html += `</div></div>`;
-      return html;
-    } else {
-      return `<p><strong>${key}:</strong> ${value || ''}</p>`;
-    }
-  }
-
   // Obtener los datos de la hoja de vida
   const docRef = doc(db, 'hojas_de_vida', id);
   getDoc(docRef).then((docSnap) => {
     if (docSnap.exists()) {
       const data = docSnap.data();
-      let html = '';
-      for (const [key, value] of Object.entries(data)) {
-        if (key.toLowerCase() !== 'creadoen') {
-          html += renderField(key, value);
-        }
-      }
+      // Datos personales
+      const nombre = data.nombre || 'Nombre Apellido';
+      const cargo = data.cargo_A || '';
+      const documento = data.documento || '';
+      const nacimiento = data.nacimiento || '';
+      const estadoCivil = data.estadoCivil || '';
+      const direccion = data.direccion || '';
+      const telefono = data.telefono || '';
+      const correo = data.correo || '';
+      // Foto (puedes poner una imagen por defecto o dejar vacío)
+      const foto = data.foto || 'https://via.placeholder.com/120x120?text=Foto';
+      // Perfil
+      const perfil = data.perfil || '';
+      // Educación
+      const educacion = Array.isArray(data.educacion) ? data.educacion : [];
+      // Experiencia
+      const experiencias = Array.isArray(data.experiencias) ? data.experiencias : [];
+
+      let html = `
+      <div class="cv-header">
+        <div class="cv-foto"><img src="${foto}" alt="Foto" /></div>
+        <div class="cv-nombre">
+          <h2>${nombre}</h2>
+          <div class="cv-cargo">${cargo}</div>
+        </div>
+      </div>
+      <hr />
+      <div class="cv-section">
+        <div class="section-title">DATOS PERSONALES</div>
+        <div class="cv-datos">
+          <div><strong>Documento de identidad:</strong> ${documento}</div>
+          <div><strong>Fecha de nacimiento:</strong> ${nacimiento}</div>
+          <div><strong>Estado civil:</strong> ${estadoCivil}</div>
+          <div><strong>Dirección:</strong> ${direccion}</div>
+          <div><strong>Celular:</strong> ${telefono}</div>
+          <div><strong>Email:</strong> ${correo}</div>
+        </div>
+      </div>
+      <hr />
+      <div class="cv-section">
+        <div class="section-title">PERFIL LABORAL</div>
+        <div>${perfil}</div>
+      </div>
+      <hr />
+      <div class="cv-section">
+        <div class="section-title">EDUCACIÓN</div>
+        <div>
+          ${educacion.length === 0 ? '<div class="item-block">(Sin datos)</div>' : educacion.map(e => `
+            <div class="item-block">
+              <div><strong>${e.titulo || ''}</strong></div>
+              <div>${e.institucion || ''}</div>
+              <div>${e.inicio || ''} - ${e.fin || ''}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <hr />
+      <div class="cv-section">
+        <div class="section-title">EXPERIENCIA PROFESIONAL</div>
+        <div>
+          ${experiencias.length === 0 ? '<div class="item-block">(Sin datos)</div>' : experiencias.map(e => `
+            <div class="item-block">
+              <div><strong>${e.cargo || ''}</strong> - ${e.empresa || ''}</div>
+              <div>${e.inicio || ''} - ${e.fin || ''}</div>
+              <div>${e.tareas || ''}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      `;
       detalles.innerHTML = html;
       modal.style.display = 'block';
     } else {

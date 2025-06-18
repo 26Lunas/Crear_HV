@@ -17,7 +17,9 @@ function agregarExperiencia() {
     <input type="text" class="form-control mb-1" placeholder="Empresa" name="empresa_${id}" required>
     <input type="text" class="form-control mb-1" placeholder="Cargo" name="cargo_${id}" required>
     <textarea class="form-control mb-1" placeholder="Tareas" name="tareas_${id}" required></textarea>
+    <label>Fecha Inicio</label>
     <input type="date" class="form-control mb-1" name="inicio_${id}" required>
+    <label>Fecha Fin</label>
     <input type="date" class="form-control mb-1" name="fin_${id}" required>
   `;
   
@@ -39,7 +41,9 @@ function agregarEducacion() {
     <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" aria-label="Eliminar" onclick="eliminarEducacion(${id})"></button>
     <input type="text" class="form-control mb-1" placeholder="Institución" name="institucion_${id}" required>
     <input type="text" class="form-control mb-1" placeholder="Título" name="titulo_${id}" required>
+    <label>Fecha Inicio</label>
     <input type="date" class="form-control mb-1" name="edu_inicio_${id}" required>
+    <label>Fecha Fin</label>
     <input type="date" class="form-control mb-1" name="edu_fin_${id}" required>
   `;
   

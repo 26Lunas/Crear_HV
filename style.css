@@ -160,7 +160,6 @@ hr {
   border-top: 1.5px solid #e0e7ef;
   margin: 18px 0;
 }
-.input-required{
-  border: solid 1px rgb(226, 16, 16) !important;
+#cvForm .required{
   color: rgb(226, 16, 16) !important;
 }
